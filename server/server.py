@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 
 app = Flask(__name__)
 CORS(app)
+
 @app.route('/api/home')
 def home():
     rain_total = pd.read_csv('static/rain_total.csv')
@@ -23,11 +24,18 @@ def home():
     rain_5d = rain_total['rain_5d'].tolist()
     return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'rain_1d': [f"{num:.1f}" for num in rain_1d], 'rain_5d': [f"{num:.1f}" for num in rain_5d], 'area_name': area_name})
 
+@app.route('/api/angkhang')
+def angkhang():
+    rain_station_csv = pd.read_csv('static/rain_station.csv')
+    station_name = rain_station_csv[rain_station_csv['area_id'] == 1]['station_id'].tolist()
+    rain_1d = rain_station_csv[rain_station_csv['area_id'] == 1]['rain_1d'].tolist()
+    return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 """
-
-
 # Task function
 def request_rain():
     url = "http://ews1.dwr.go.th/website/webservice/rain_daily.php?uid=landslide2022cm&upass=cicecmu2020&dmode=2&dtype=2&ondate=dd/mm/yyyy"
