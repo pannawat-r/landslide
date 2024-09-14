@@ -1,12 +1,10 @@
 'use client'
 import { useState, useEffect, useMemo } from 'react'
 import dynamic from 'next/dynamic';
-
 import axios from "axios";
 import Footer from '@/components/footer'
 import Header from '@/components/header'
 import { Loading } from '@/components/loading';
-
 import { BarChart } from '@/components/bar'
 
 export default function Angkhang() {
@@ -25,7 +23,7 @@ export default function Angkhang() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:5000/api/angkhang')
+                const response = await axios.get('http://127.0.0.1:5000/api/suthep')
                 setDatetime(response.data.datetime)
                 setStationName(response.data.station_name)
                 setRain1d(response.data.rain_1d)
@@ -39,13 +37,13 @@ export default function Angkhang() {
     return (
         <>
             <Header />
-            <p className='text-center text-2xl py-5'>อ่างขาง (ตำบลม่อนปิ่น อำเภอฝาง จังหวัดเชียงใหม่)</p>
+            <p className='text-center text-2xl py-5'>ดอยสุเทพปุย (ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่)</p>
 
             <div className="container mx-auto">
                 {/* Map */}
                 <div className="relative z-0">
                     <div className="w-full h-[50rem]">
-                        <Map position={[19.901635393640483, 99.0424094582897]} zoom={14}></Map>
+                        <Map position={[18.81638834589227, 98.89125771293459]} zoom={14}></Map>
                     </div>
                 </div>
 

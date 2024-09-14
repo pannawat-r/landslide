@@ -1,10 +1,11 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 import axios from "axios";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Loading } from "@/components/loading";
 
-import { Map } from "@/components/map";
 
 export default function Home() {
   const [datetime, setDatetime] = useState()
@@ -12,7 +13,13 @@ export default function Home() {
   const [rain1d, setRain1d] = useState([])
   const [rain5d, setRain5d] = useState([])
 
-  
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/map'),
+    {
+      loading: () => <div className="content-center h-[50rem] mx-auto"><Loading /></div>,
+      ssr: false
+    }
+  ), [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +37,6 @@ export default function Home() {
     fetchData()
   }, [])
 
-  console.log(rain1d, areaName)
   return (
     <>
       {/* Header  */}
@@ -47,15 +53,16 @@ export default function Home() {
         {/* Map */}
         <div className="flex justify-between p-3">
           <div className="w-full mr-3">
-            <Map position={[18.788187932870155, 98.98523626490541]} zoom={10}></Map>
+            <Map position={[18.788187932870155, 98.98523626490541]} zoom={10}>
+            </Map>
           </div>
           <div className="w-full h-1/2 ml-3 z-0">
             <select className="w-full mb-3">
-              <option value="1" selected>อ่างขาง (ตำบลม่อนปิ่น อำเภอฝาง จังหวัดเชียงใหม่)</option>
-              <option value="2">แม่กำปอง (ตำบลห้วยแก้ว อำเภอแม่ออน จังหวัดเชียงใหม่)</option>
-              <option value="3">ม่อนแจ่ม (ตำบลแม่แรม อำเภอแม่ริม จังหวัดเชียงใหม่)</option>
-              <option value="4">ดอยสุเทพปุย (ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่)</option>
-              <option value="5">ขุนกลาง (ตำบลบ้านหลวง อำเภอจอมทอง จังหวัดเชียงใหม่)</option>
+              <option value={1}>อ่างขาง (ตำบลม่อนปิ่น อำเภอฝาง จังหวัดเชียงใหม่)</option>
+              <option value={2}>แม่กำปอง (ตำบลห้วยแก้ว อำเภอแม่ออน จังหวัดเชียงใหม่)</option>
+              <option value={3}>ม่อนแจ่ม (ตำบลแม่แรม อำเภอแม่ริม จังหวัดเชียงใหม่)</option>
+              <option value={4}>ดอยสุเทพปุย (ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่)</option>
+              <option value={5}>ขุนกลาง (ตำบลบ้านหลวง อำเภอจอมทอง จังหวัดเชียงใหม่)</option>
             </select>
             <Map position={[18.788187932870155, 98.98523626490541]} zoom={10}></Map>
           </div>

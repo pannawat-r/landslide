@@ -31,6 +31,35 @@ def angkhang():
     rain_1d = rain_station_csv[rain_station_csv['area_id'] == 1]['rain_1d'].tolist()
     return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
 
+@app.route('/api/maekampong')
+def maekampong():
+    rain_station_csv = pd.read_csv('static/rain_station.csv')
+    station_name = rain_station_csv[rain_station_csv['area_id'] == 2]['station_id'].tolist()
+    rain_1d = rain_station_csv[rain_station_csv['area_id'] == 2]['rain_1d'].tolist()
+    return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
+
+
+@app.route('/api/monjam')
+def monjam():
+    rain_station_csv = pd.read_csv('static/rain_station.csv')
+    station_name = rain_station_csv[rain_station_csv['area_id'] == 3]['station_id'].tolist()
+    rain_1d = rain_station_csv[rain_station_csv['area_id'] == 3]['rain_1d'].tolist()
+    return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
+
+@app.route('/api/suthep')
+def suthep():
+    rain_station_csv = pd.read_csv('static/rain_station.csv')
+    station_name = rain_station_csv[rain_station_csv['area_id'] == 4]['station_id'].tolist()
+    rain_1d = rain_station_csv[rain_station_csv['area_id'] == 4]['rain_1d'].tolist()
+    return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
+
+@app.route('/api/khunklang')
+def khunklang():
+    rain_station_csv = pd.read_csv('static/rain_station.csv')
+    station_name = rain_station_csv[rain_station_csv['area_id'] == 5]['station_id'].tolist()
+    rain_1d = rain_station_csv[rain_station_csv['area_id'] == 5]['rain_1d'].tolist()
+    return jsonify({'datetime': datetime.datetime.now().strftime('%d/%m/%Y'), 'station_name': station_name, 'rain_1d': [round(float(num), 2) for num in rain_1d]})
+
 if __name__ == '__main__':
     app.run(debug=True)
 
