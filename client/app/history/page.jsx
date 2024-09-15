@@ -18,20 +18,22 @@ export default function History() {
                 <table className="w-full table-auto my-3">
                     <thead>
                         <tr className="border-black border-b-2">
-                            <th className="p-3">พื้นที่</th>
-                            <th>น้ำฝนรายวันเวลา 7:00 น</th>
-                            <th>น้ำฝนสะสมราย 5 วัน</th>
-                            <th>ความเสี่ยงดินภล่ม</th>
+                            <th className="p-3">วันที่</th>
+                            <th>พื้นที่</th>
+                            <th>น้ำฝน</th>
+                            <th>ความเสี่ยงดินภล่ม (สูงสุด)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="border-b-2">
-                            <td className="text-center p-3">1</td>
-                            <td className="text-center p-3">2</td>
-                            <td className="text-center p-3">0.0 มม</td>
-                            <td className="text-center p-3">ไม่มี</td>
+                            {/* 
+                            <td className="text-center p-3"></td>
+                            <td className="text-center p-3"></td>
+                            <td className="text-center p-3"></td>
+                            <td className="text-center p-3"></td>
                             <td><a href="" className="text-white bg-blue-500 hover:bg-blue-300 transition duration-150 p-2 rounded-lg">ดูข้อมูล</a></td>
+                             */}
                         </tr>
 
                     </tbody>

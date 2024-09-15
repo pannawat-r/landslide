@@ -6,13 +6,16 @@ import axios from "axios";
 import Footer from '@/components/footer'
 import Header from '@/components/header'
 import { Loading } from '@/components/loading';
-
 import { BarChart } from '@/components/bar'
+
 
 export default function Angkhang() {
     const [datetime, setDatetime] = useState()
     const [stationName, setStationName] = useState([])
     const [rain1d, setRain1d] = useState([])
+    const [lat, setLat] = useState([])
+    const [lon, setLon] = useState([])
+    const [lsProb, setLsProb] = useState([])
 
     const Map = useMemo(() => dynamic(
         () => import('@/components/map'),
@@ -22,6 +25,13 @@ export default function Angkhang() {
         }
     ), [])
 
+    const HeatmapLayer = useMemo(() => dynamic(
+        () => import('react-leaflet-heat-layer'),
+        {
+            ssr: false
+        }
+    ))
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -29,6 +39,9 @@ export default function Angkhang() {
                 setDatetime(response.data.datetime)
                 setStationName(response.data.station_name)
                 setRain1d(response.data.rain_1d)
+                setLat(response.data.lat)
+                setLon(response.data.lon)
+                setLsProb(response.data.ls_prob)
             } catch (error) {
                 console.log(error)
             }
@@ -36,6 +49,7 @@ export default function Angkhang() {
 
         fetchData()
     }, [])
+
     return (
         <>
             <Header />
@@ -45,10 +59,19 @@ export default function Angkhang() {
                 {/* Map */}
                 <div className="relative z-0">
                     <div className="w-full h-[50rem]">
-                        <Map position={[19.901635393640483, 99.0424094582897]} zoom={14}></Map>
+                        <Map center={[19.901635393640483, 99.0424094582897]} zoom={14}>
+                            {({ TileLayer }) => (
+                                <>
+                                    <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                    {lat ? (
+                                        <HeatmapLayer latlngs={lat.map((position, index) => [position, lon[index], lsProb[index]])} />
+                                    ) : null}
+                                </>
+                            )}
+                        </Map>
+
                     </div>
                 </div>
-
 
                 {/*  */}
                 <p className='text-center text-xl p-3'>ความเสี่ยงดินถล่ม วันที่ {datetime}</p>
